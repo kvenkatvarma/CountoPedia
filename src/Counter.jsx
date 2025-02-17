@@ -7,32 +7,52 @@ export default class Counter extends React.Component{
     constructor(props)
     {
        super(props);
-       this.handleAttack = this.handleAttack.bind(this);
-       this.handleDefence = this.handleDefence.bind(this);
-
-       this.state = {
+           this.state = {
            count:0
        }
     }
      
-    handleAttack(){
+    handleAttack=()=>{
       
         this.setState((prevstate)=>{
+            let newCount = prevstate.count + Math.round(Math.random() * 10);
             return {
-              count:prevstate.count + 1,
+              count:newCount,
             };
       });      
     }
 
-    handleDefence(){
+    handleDefence=()=>{
         this.setState((prevstate)=>{
+            let newCount = prevstate.count - Math.round(Math.random() * 10);
+
             return {
-              count:prevstate.count - 1,
+              count:newCount,
             };
       });
 
     }
 
+
+    handleReset=()=>{
+        this.setState(()=>{           
+            return {
+              count:0,
+            };
+      });
+
+    }
+
+    handleRandomPlay=()=>{
+       let playMode = Math.round(Math.random());
+        if(playMode == 0)
+        {
+            this.handleAttack();
+        }
+        else{
+            this.handleDefence();
+        }
+    }
     render(){
         return (
             <div className="row text-white text-center">
@@ -65,9 +85,9 @@ export default class Counter extends React.Component{
                 />
               </div>
                <div className="col-12 col-md-4 offset-md-4">
-                  <button className="btn btn-secondary w-100 mt-2">Random Play</button>
+                  <button className="btn btn-secondary w-100 mt-2" onClick={this.handleRandomPlay}>Random Play</button>
                   <br/>
-                  <button className="btn btn-warning w-100 mt-2">Reset</button>
+                  <button className="btn btn-warning w-100 mt-2" onClick={this.handleReset}>Reset</button>
                </div>
             </div>
         );
